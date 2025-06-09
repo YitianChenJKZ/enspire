@@ -230,6 +230,64 @@
             opacity: 0.8;
         }
 
+        /* Download Section */
+        .download-section {
+            text-align: center;
+            padding: 64px 0;
+            background: #F8F9FA;
+        }
+
+        .download-section h2 {
+            font-size: 24px;
+            margin-bottom: 32px;
+            color: var(--text-dark);
+        }
+
+        .download-tiles {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        .tile {
+            position: relative;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .download-img {
+            width: 200px;
+            height: auto;
+            transition: transform 0.3s ease;
+            box-shadow: var(--shadow-sm);
+            border-radius: var(--radius-md);
+        }
+
+        .download-img:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-md);
+        }
+
+        .coming-soon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.6);
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .tile:hover .coming-soon {
+            opacity: 1;
+        }
+
         /* Animations */
         @keyframes fadeInUp {
             to {
@@ -273,6 +331,15 @@
                 padding: 14px 32px;
                 font-size: 16px;
             }
+
+            .download-section h2 {
+                font-size: 24px;
+            }
+
+            .tile {
+                width: 180px;
+                height: 180px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -291,6 +358,15 @@
             .footer-links {
                 flex-direction: column;
                 gap: 12px;
+            }
+
+            .download-section h2 {
+                font-size: 20px;
+            }
+
+            .tile {
+                width: 150px;
+                height: 150px;
             }
         }
     </style>
@@ -321,6 +397,22 @@
         <section class="cta-section">
             <div class="container">
                 <a href="https://forms.gle/JqLpf7MfN85LkCYb8" class="cta-button pulse" target="_blank">Get Early Premium Access</a>
+            </div>
+        </section>
+
+        <section class="download-section">
+            <div class="container">
+                <h2>Coming Soon to Your Favorite Platforms</h2>
+                <div class="download-tiles">
+                    <div class="tile">
+                        <img src="app-store-badge.png" alt="Download on the App Store" class="download-img">
+                        <span class="coming-soon">Coming Soon</span>
+                    </div>
+                    <div class="tile">
+                        <img src="google-play-badge.png" alt="Get it on Google Play" class="download-img">
+                        <span class="coming-soon">Coming Soon</span>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
