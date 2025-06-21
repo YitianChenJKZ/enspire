@@ -11,7 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gradient-blue: linear-gradient(135deg, #007BFF 0%, #00C4FF 100%);
+            --gradient-blue: linear-gradient(90deg, #43e0ff 0%, #4a90e2 100%);
+            --gradient-blue-solid-1: #43e0ff;
+            --gradient-blue-solid-2: #4a90e2;
             --text-dark: #333333;
             --text-light: #FFFFFF;
             --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
@@ -77,29 +79,29 @@
 
         /* Hero Section */
         .hero {
-            padding: 64px 0;
+            padding: 64px 0 0 0;
             text-align: center;
             position: relative;
         }
 
         .hero h1 {
-            font-size: 42px;
-            font-weight: 700;
-            margin-bottom: 24px;
+            font-size: 54px;
+            font-weight: 800;
+            margin-bottom: 32px;
             background: var(--gradient-blue);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            line-height: 1.2;
+            line-height: 1.1;
             transform: translateY(20px);
             opacity: 0;
             animation: fadeInUp 0.8s ease-out forwards;
         }
 
         .hero p {
-            font-size: 18px;
-            max-width: 600px;
-            margin: 0 auto 48px;
+            font-size: 24px;
+            max-width: 700px;
+            margin: 0 auto 64px;
             color: var(--text-dark);
             opacity: 0.9;
             transform: translateY(20px);
@@ -290,6 +292,102 @@
             opacity: 1;
         }
 
+        /* Waitlist Form Styles */
+        .waitlist-form {
+            max-width: 600px;
+            margin: 96px auto 96px auto;
+            padding: 48px 32px;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 12px 32px rgba(68, 176, 255, 0.10), var(--shadow-md);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.6s forwards;
+        }
+
+        .waitlist-form h3 {
+            font-size: 36px;
+            margin-bottom: 18px;
+            color: var(--gradient-blue-solid-2);
+            font-weight: 700;
+            background: var(--gradient-blue);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .waitlist-form p {
+            font-size: 20px;
+            margin-bottom: 32px;
+            color: var(--text-dark);
+            opacity: 0.85;
+        }
+
+        .form-group {
+            display: flex;
+            gap: 18px;
+            margin-bottom: 24px;
+            width: 100%;
+        }
+
+        .form-input {
+            flex: 1;
+            padding: 20px 20px;
+            border: 2px solid rgba(68, 176, 255, 0.18);
+            border-radius: var(--radius-md);
+            font-size: 20px;
+            transition: var(--transition);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #43e0ff;
+            box-shadow: 0 0 0 3px rgba(68, 176, 255, 0.12);
+        }
+
+        .submit-button {
+            padding: 20px 36px;
+            background: var(--gradient-blue);
+            color: var(--text-light);
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 2px 8px rgba(68, 176, 255, 0.10);
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 6px 18px rgba(68, 176, 255, 0.18);
+        }
+
+        .form-message {
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            font-size: 18px;
+            display: none;
+        }
+
+        .form-message.success {
+            background: #E3FCEF;
+            color: #00875A;
+            display: block;
+        }
+
+        .form-message.error {
+            background: #FEE2E2;
+            color: #DC2626;
+            display: block;
+        }
+
         /* Animations */
         @keyframes fadeInUp {
             to {
@@ -386,8 +484,20 @@
     <main>
         <section class="hero">
             <div class="container">
-                <h1>Discover Enspire: Your Audio Journey Awaits</h1>
-                <p>Bite-sized audio lessons to grow your mind — anytime, anywhere.</p>
+                <h1>Stream Audio, Redefined</h1>
+                <p>Experience the future of audio streaming with Enspire. Premium features coming soon.</p>
+                
+                <div class="waitlist-form">
+                    <h3>Join the Waitlist</h3>
+                    <p>Be the first to know when premium features launch</p>
+                    <form id="emailForm">
+                        <div class="form-group">
+                            <input type="email" class="form-input" id="email" placeholder="Enter your email" required>
+                            <button type="submit" class="submit-button">Join Waitlist</button>
+                        </div>
+                        <div id="formMessage" class="form-message"></div>
+                    </form>
+                </div>
                 
                 <div class="hero-images">
                     <img src="ux_1.png" alt="Enspire App Interface" class="hero-img" style="max-width: 400px;">
@@ -429,7 +539,42 @@
         </div>
     </footer>
 
-    <script>
+    <script type="module">
+        // Import Email Service
+        import { EmailService } from './email-service.js';
+
+        // Initialize Email Service
+        const emailService = new EmailService();
+
+        // Handle Email Form Submission
+        document.getElementById("emailForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const email = document.getElementById("email").value;
+            const formMessage = document.getElementById("formMessage");
+
+            // Show loading state
+            formMessage.className = 'form-message';
+            formMessage.textContent = 'Adding you to the waitlist...';
+            formMessage.style.display = 'block';
+
+            try {
+                const result = await emailService.addToWaitlist(email);
+                
+                if (result.success) {
+                    formMessage.className = 'form-message success';
+                    formMessage.textContent = result.message;
+                    document.getElementById("emailForm").reset();
+                } else {
+                    formMessage.className = 'form-message error';
+                    formMessage.textContent = result.message;
+                }
+            } catch (error) {
+                formMessage.className = 'form-message error';
+                formMessage.textContent = 'There was an error. Please try again later.';
+                console.error('Error:', error);
+            }
+        });
+
         // Add interactive animations on scroll
         document.addEventListener('DOMContentLoaded', function() {
             // Add scroll event for future elements
@@ -449,6 +594,85 @@
                 });
             });
         });
+    </script>
+
+    <!-- Firebase Realtime Database Setup -->
+    <!-- The core Firebase JS SDK must be loaded first -->
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <!-- Add the Realtime Database SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-database-compat.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyB34qqnmqKbpW_pgCIHQJaWqXBvZo_nV7U",
+            authDomain: "nceatutor-6a0b8.firebaseapp.com",
+            databaseURL: "https://nceatutor-6a0b8-default-rtdb.firebaseio.com", // This is YOUR default DB URL!
+            projectId: "nceatutor-6a0b8", // This is YOUR project ID!
+            storageBucket: "nceatutor-6a0b8.appspot.com",
+            messagingSenderId: "187738507048",
+            appId: "1:187738507048:web:f76c6cc43333739ac7f21d"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Get a reference to the database service
+        const database = firebase.database();
+
+        // Alternative Realtime Database form handler
+        const waitlistForm = document.getElementById('emailForm');
+        const emailInput = document.getElementById('email');
+        const messageDiv = document.getElementById('formMessage');
+
+        // Override the existing form handler with Realtime Database version
+        waitlistForm.removeEventListener('submit', waitlistForm._submitHandler);
+        
+        waitlistForm.addEventListener('submit', async (e) => {
+            e.preventDefault(); // Stop the form from submitting normally
+
+            const email = emailInput.value;
+
+            if (!email) {
+                showMessage("Please enter your email address.", 'error');
+                return;
+            }
+
+            // Show loading state
+            showMessage("Adding you to the waitlist...", '');
+
+            try {
+                // Get a reference to the 'waitlist_emails' path in your Realtime Database
+                // Using .push() creates a unique key for each new email,
+                // which is great for a list of items!
+                await database.ref('waitlist_emails').push({
+                    email: email,
+                    timestamp: firebase.database.ServerValue.TIMESTAMP // Records the time on the server
+                });
+
+                showMessage("Thank you for joining our waitlist!", 'success');
+                emailInput.value = ''; // Clear the input field
+            } catch (error) {
+                console.error("Error adding email to waitlist:", error);
+                showMessage("Oops! Something went wrong. Please try again.", 'error');
+            }
+        });
+
+        function showMessage(text, type) {
+            messageDiv.textContent = text;
+            messageDiv.className = `form-message ${type}`; // Apply styling
+            messageDiv.style.display = 'block';
+            
+            // Optionally clear message after a few seconds
+            if (type === 'success') {
+                setTimeout(() => {
+                    messageDiv.textContent = '';
+                    messageDiv.className = 'form-message';
+                    messageDiv.style.display = 'none';
+                }, 5000); // Message disappears after 5 seconds
+            }
+        }
     </script>
 </body>
 </html>
