@@ -178,18 +178,10 @@
                 Recieve a Linkedin certified "Global Enspire Ambassador" certificate now.
             </p>
             <button id="openNominationModal" class="gradient-button text-white font-bold py-4 px-8 rounded-full text-lg shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-opacity-75">
-                Unlock Now!
+                <span id="unlockNowText">Unlock Now!</span>
+                <span id="participantCount" class="ml-3 bg-blue-700 bg-opacity-80 rounded-full px-4 py-1 text-white font-bold text-base align-middle" style="display: none;"></span>
             </button>
             <p id="currentUserIdDisplay" class="mt-4 text-sm text-gray-500 hidden"></p>
-        </section>
-
-        <!-- Participant Tree/Web Section -->
-        <section class="w-full max-w-6xl mx-auto mt-16 p-6 bg-gray-800 bg-opacity-50 rounded-2xl shadow-2xl backdrop-filter backdrop-blur-lg border border-gray-700">
-            <h2 class="text-3xl font-bold text-white mb-8 text-center">Our Growing Community Web</h2>
-            <div id="chart-container" class="w-full h-[600px] bg-gray-900 rounded-lg shadow-inner border border-gray-700 overflow-hidden">
-                <svg id="participantWeb" class="w-full h-full"></svg>
-            </div>
-            <p class="text-center text-gray-400 mt-4 text-sm">Hover over nodes to see participant names.</p>
         </section>
 
         <!-- World Map Section -->
@@ -203,6 +195,15 @@
                 </div>
             </div>
             <p class="text-center text-gray-400 mt-4 text-sm">Click on markers to see participant details.</p>
+        </section>
+
+        <!-- Participant Tree/Web Section -->
+        <section class="w-full max-w-6xl mx-auto mt-16 p-6 bg-gray-800 bg-opacity-50 rounded-2xl shadow-2xl backdrop-filter backdrop-blur-lg border border-gray-700">
+            <h2 class="text-3xl font-bold text-white mb-8 text-center">Our Growing Community Web</h2>
+            <div id="chart-container" class="w-full h-[600px] bg-gray-900 rounded-lg shadow-inner border border-gray-700 overflow-hidden">
+                <svg id="participantWeb" class="w-full h-full"></svg>
+            </div>
+            <p class="text-center text-gray-400 mt-4 text-sm">Hover over nodes to see participant names.</p>
         </section>
     </main>
 
@@ -536,6 +537,7 @@
                     console.log("Participants fetched:", participants);
                     updateGraph(); // Re-render D3 graph with new data
                     updateMap(); // Update world map with new data
+                    updateParticipantCounter(); // Update live counter
                     loadingIndicator.classList.add('hidden'); // Hide loading indicator
                     if (participants.length === 0) {
                         console.log("No participants found yet in Firestore.");
@@ -546,6 +548,19 @@
                     showMessageBox('error', `Failed to load participants: ${error.message}. Check console for details.`);
                     loadingIndicator.classList.add('hidden');
                 });
+            }
+
+            // Live participant counter for Unlock Now button
+            function updateParticipantCounter() {
+                const countSpan = document.getElementById('participantCount');
+                if (countSpan) {
+                    if (participants.length > 0) {
+                        countSpan.textContent = `${participants.length} joined!`;
+                        countSpan.style.display = '';
+                    } else {
+                        countSpan.style.display = 'none';
+                    }
+                }
             }
 
             // Modal functionality
