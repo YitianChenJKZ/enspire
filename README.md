@@ -1,191 +1,155 @@
-# Enspire - Firebase Email Collection Setup
+# The Ultimate Nomination Challenge
 
-This is a complete setup for collecting email addresses using Firebase Firestore without user authentication. Perfect for waitlists, newsletters, or simple email collection forms.
+An interactive web application that allows users to nominate themselves and see their connections in a beautiful D3.js force-directed graph.
 
-## 🚀 Features
+## Features
 
-- **Simple Email Collection**: Collect emails without user authentication
-- **Duplicate Prevention**: Prevents duplicate email submissions
-- **Email Validation**: Client-side email format validation
-- **Admin Dashboard**: View and export collected emails
-- **Real-time Updates**: Instant feedback to users
-- **CSV Export**: Download email list as CSV file
+- ✨ Interactive nomination form
+- 🌐 Real-time participant web visualization using D3.js
+- 🔥 Firebase Firestore backend for data persistence
+- 📱 Responsive design with Tailwind CSS
+- 🔐 Secure authentication and data access
 
-## 📁 File Structure
+## Project Setup
 
-```
-enspire/
-├── index.html          # Main landing page with email form
-├── admin.html          # Admin dashboard to view emails
-├── firebase-config.js  # Firebase configuration
-├── email-service.js    # Email collection service
-└── README.md          # This file
-```
+### Prerequisites
 
-## 🔧 Setup Instructions
+- Node.js (version 16 or higher)
+- Firebase CLI
+- A Firebase project (already configured: `campaign-71998`)
 
-### 1. Firebase Project Setup
+### Installation
 
-1. Go to [Firebase Console](https://console.firebase.google.com/)
-2. Create a new project or use existing one
-3. Enable Firestore Database
-4. Go to Project Settings > General
-5. Copy your Firebase config (apiKey, authDomain, etc.)
+1. **Install Firebase CLI globally:**
+   ```bash
+   npm install -g firebase-tools
+   ```
 
-### 2. Update Firebase Configuration
+2. **Login to Firebase:**
+   ```bash
+   firebase login
+   ```
 
-Edit `firebase-config.js` and replace with your Firebase project details:
+3. **Install project dependencies:**
+   ```bash
+   npm install
+   ```
 
-```javascript
-const firebaseConfig = {
-    apiKey: "your-api-key",
-    authDomain: "your-project.firebaseapp.com",
-    projectId: "your-project-id",
-    storageBucket: "your-project.appspot.com",
-    messagingSenderId: "your-sender-id",
-    appId: "your-app-id"
-};
-```
-
-### 3. Firestore Security Rules
-
-Set up Firestore security rules to allow read/write access:
-
-```javascript
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /waitlist/{email} {
-      allow read, write: if true;  // For development
-      // For production, consider more restrictive rules
-    }
-  }
-}
-```
-
-### 4. Deploy to Web Server
-
-Upload all files to your web server. The setup works with any static hosting service like:
-- GitHub Pages
-- Netlify
-- Vercel
-- Firebase Hosting
-
-## 📝 How It Works
-
-### Email Collection Flow
-
-1. **User submits email** → Form validation
-2. **Check for duplicates** → Query Firestore
-3. **Store email** → Create document in 'waitlist' collection
-4. **Show feedback** → Success/error message
-
-### Data Structure
-
-Each email is stored as a document in the `waitlist` collection:
-
-```javascript
-{
-  email: "user@example.com",
-  name: "John Doe",  // Optional
-  timestamp: "2024-01-15T10:30:00.000Z",
-  status: "active"
-}
-```
-
-## 🎯 Usage
-
-### Main Page (`index.html`)
-- Users visit your landing page
-- Enter their email address
-- Get instant feedback on submission
-
-### Admin Page (`admin.html`)
-- View all collected emails
-- See statistics (total subscribers, today's signups)
-- Export emails to CSV
-- Access at `yourdomain.com/admin.html`
-
-## 🔒 Security Considerations
+4. **Initialize Firebase in your project (if not already done):**
+   ```bash
+   firebase use campaign-71998
+   ```
 
 ### Development
-- Current setup allows public read/write access
-- Suitable for testing and development
 
-### Production
-Consider implementing:
-- Rate limiting
-- CAPTCHA verification
-- Email verification
-- Admin authentication for admin page
-- More restrictive Firestore rules
+1. **Start the local development server:**
+   ```bash
+   npm start
+   # or
+   firebase serve
+   ```
 
-## 🛠️ Customization
+2. **Open your browser and navigate to:**
+   ```
+   http://localhost:5000
+   ```
 
-### Styling
-- Modify CSS in `index.html` and `admin.html`
-- Update colors, fonts, and layout as needed
+### Deployment
 
-### Form Fields
-- Add more fields by updating the form in `index.html`
-- Modify `email-service.js` to handle additional data
+1. **Deploy to Firebase Hosting:**
+   ```bash
+   npm run deploy
+   # or
+   firebase deploy
+   ```
 
-### Email Validation
-- Update the `isValidEmail()` function in `email-service.js`
-- Add more sophisticated validation rules
+2. **Your app will be available at:**
+   ```
+   https://campaign-71998.web.app
+   ```
 
-### Success Messages
-- Customize success/error messages in `email-service.js`
-- Add email templates for confirmation emails
+## Firebase Configuration
 
-## 📊 Analytics
+The project is configured to use:
+- **Project ID:** `campaign-71998`
+- **Database:** Firestore
+- **Hosting:** Firebase Hosting
+- **Authentication:** Anonymous authentication
 
-The admin dashboard provides:
-- Total number of subscribers
-- Today's signup count
-- Chronological list of all emails
-- CSV export functionality
+### Firestore Structure
 
-## 🚨 Troubleshooting
+```
+artifacts/
+  {appId}/
+    public/
+      data/
+        nominations/
+          {documentId}/
+            name: string
+            email: string
+            timestamp: timestamp
+            submittedBy: string (user ID)
+```
+
+## Security Rules
+
+The Firestore security rules allow:
+- ✅ Authenticated users to read and write nomination data
+- ✅ Public read access to nominations
+- ❌ Unauthenticated users cannot write data
+
+## Features
+
+### Nomination Form
+- Collects user name and email
+- Validates input data
+- Stores submissions in Firestore
+- Real-time feedback
+
+### Interactive Web Visualization
+- D3.js force-directed graph
+- Real-time updates when new nominations are added
+- Hover tooltips with participant information
+- Draggable nodes
+- Responsive design
+
+### Real-time Updates
+- Firebase Firestore listeners
+- Automatic graph updates
+- Live participant count
+
+## Troubleshooting
 
 ### Common Issues
 
-1. **"Firebase: Error (auth/email-already-in-use)"**
-   - This error occurs when trying to create user accounts
-   - Solution: Use the provided setup that stores emails directly in Firestore
+1. **Firebase not initialized:**
+   - Ensure you're logged in: `firebase login`
+   - Check project selection: `firebase use campaign-71998`
 
-2. **CORS Errors**
-   - Ensure your domain is added to Firebase authorized domains
-   - Check Firebase project settings
+2. **Permission denied errors:**
+   - Verify Firestore rules are deployed
+   - Check authentication status
 
-3. **Module Import Errors**
-   - Ensure you're serving files from a web server (not file://)
-   - Check that all files are in the correct directory
+3. **Graph not displaying:**
+   - Check browser console for errors
+   - Verify Firestore connection
+   - Ensure D3.js is loading properly
 
 ### Debug Mode
 
-Enable console logging by uncommenting debug lines in `email-service.js`:
+To enable debug logging, open browser console and look for:
+- Firebase initialization messages
+- Firestore connection status
+- D3.js graph updates
 
-```javascript
-console.log('Adding email to waitlist:', email);
-```
+## Contributing
 
-## 📞 Support
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test locally
+5. Submit a pull request
 
-For issues or questions:
-1. Check Firebase Console for errors
-2. Review browser console for JavaScript errors
-3. Verify Firebase configuration is correct
-4. Ensure Firestore is enabled in your project
+## License
 
-## 🔄 Updates
-
-To update the setup:
-1. Backup your current configuration
-2. Update the relevant files
-3. Test thoroughly before deploying
-4. Monitor for any breaking changes
-
----
-
-**Note**: This setup is designed for simple email collection. For more complex applications, consider implementing additional security measures and user authentication.
+MIT License - see LICENSE file for details 

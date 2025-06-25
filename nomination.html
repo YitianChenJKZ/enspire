@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Enspire Challenge</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- D3.js CDN for the force-directed graph -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Leaflet.js CDN for the world map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117; /* Dark background for professional feel */
+            color: #e6edf3; /* Light text color */
+        }
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #161b22;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #304a6e;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #42638e;
+        }
+
+        .gradient-button {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .gradient-button:hover {
+            background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .modal-content {
+            background-color: #161b22;
+        }
+
+        /* D3.js specific styles */
+        .node circle {
+            fill: #6a11cb; /* Node color */
+            stroke: #e6edf3; /* Node border */
+            stroke-width: 1.5px;
+            cursor: pointer;
+        }
+
+        .node text {
+            font-size: 10px;
+            fill: #e6edf3;
+            pointer-events: none; /* Make text not interfere with node events */
+            text-shadow: 0 0 3px rgba(0,0,0,0.8); /* Add text shadow for readability */
+        }
+
+        .tooltip {
+            position: absolute;
+            text-align: center;
+            width: auto;
+            height: auto;
+            padding: 8px;
+            font-size: 14px;
+            background: #2575fc;
+            border: 0px;
+            border-radius: 8px;
+            pointer-events: none;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 100; /* Ensure tooltip is above other elements */
+        }
+
+        /* Leaflet map styles */
+        .leaflet-container {
+            background-color: #0d1117;
+        }
+        
+        .leaflet-popup-content-wrapper {
+            background-color: #161b22;
+            color: #e6edf3;
+            border-radius: 8px;
+        }
+        
+        .leaflet-popup-tip {
+            background-color: #161b22;
+        }
+        
+        .leaflet-popup-content {
+            margin: 8px 12px;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .participant-marker {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            border: 2px solid #e6edf3;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .participant-marker:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 15px rgba(106, 17, 203, 0.6);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-between" style="background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #2575fc 100%);">
+    <!-- Navigation Bar -->
+    <nav class="w-full flex items-center justify-between px-8 py-4 bg-transparent absolute top-0 left-0 z-50">
+        <div></div>
+        <a href="https://enspire.lol" class="text-white text-lg font-semibold hover:underline transition">Home</a>
+    </nav>
+
+    <!-- Logo -->
+    <div class="w-full flex justify-center pt-12 pb-2">
+        <img src="logo.png" alt="Enspire Logo" class="h-20 w-auto mx-auto" style="filter: drop-shadow(0 4px 24px #2575fc88);">
+    </div>
+
+    <!-- Header -->
+    <header class="w-full pt-8 pb-6 bg-transparent text-center">
+        <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-tight mb-2" style="padding-top: 1.5rem;">
+            The <span class="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-blue-700">Enspire</span> Challenge
+        </h1>
+        <p class="mt-4 text-xl text-gray-300">Join the movement and be part of something great!</p>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="flex-grow flex flex-col items-center justify-center p-4">
+        <section class="text-center max-w-4xl mx-auto py-12 px-6 bg-gray-800 bg-opacity-50 rounded-2xl shadow-2xl backdrop-filter backdrop-blur-lg border border-gray-700">
+            <h2 class="text-4xl font-bold text-white mb-6">Unlock Your Certificate</h2>
+            <p class="text-lg text-gray-300 mb-8">
+                Recieve a Linkedin certified "Global Enspire Ambassador" certificate now.
+            </p>
+            <button id="openNominationModal" class="gradient-button text-white font-bold py-4 px-8 rounded-full text-lg shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-opacity-75">
+                Unlock Now!
+            </button>
+            <p id="currentUserIdDisplay" class="mt-4 text-sm text-gray-500 hidden"></p>
+        </section>
+
+        <!-- Participant Tree/Web Section -->
+        <section class="w-full max-w-6xl mx-auto mt-16 p-6 bg-gray-800 bg-opacity-50 rounded-2xl shadow-2xl backdrop-filter backdrop-blur-lg border border-gray-700">
+            <h2 class="text-3xl font-bold text-white mb-8 text-center">Our Growing Community Web</h2>
+            <div id="chart-container" class="w-full h-[600px] bg-gray-900 rounded-lg shadow-inner border border-gray-700 overflow-hidden">
+                <svg id="participantWeb" class="w-full h-full"></svg>
+            </div>
+            <p class="text-center text-gray-400 mt-4 text-sm">Hover over nodes to see participant names.</p>
+        </section>
+
+        <!-- World Map Section -->
+        <section class="w-full max-w-6xl mx-auto mt-16 p-6 bg-gray-800 bg-opacity-50 rounded-2xl shadow-2xl backdrop-filter backdrop-blur-lg border border-gray-700">
+            <h2 class="text-3xl font-bold text-white mb-8 text-center">Our Global Community</h2>
+            <div id="map-container" class="w-full h-[600px] bg-gray-900 rounded-lg shadow-inner border border-gray-700 overflow-hidden relative">
+                <div id="world-map" class="w-full h-full"></div>
+                <div class="absolute top-4 left-4 bg-gray-800 bg-opacity-75 rounded-lg p-3 text-white text-sm">
+                    <div class="font-semibold mb-1">Participants by Location</div>
+                    <div id="map-stats">Loading...</div>
+                </div>
+            </div>
+            <p class="text-center text-gray-400 mt-4 text-sm">Click on markers to see participant details.</p>
+        </section>
+    </main>
+
+    <!-- Nomination Form Modal -->
+    <div id="nominationModal" class="fixed inset-0 flex items-center justify-center z-50 hidden modal-overlay transition-opacity duration-300 ease-in-out opacity-0">
+        <div class="modal-content relative p-8 rounded-2xl shadow-2xl max-w-md w-full mx-4 border border-gray-700 transform transition-transform duration-300 ease-in-out scale-95">
+            <button id="closeNominationModal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-200 text-3xl font-bold leading-none">&times;</button>
+            <h3 class="text-3xl font-bold text-white mb-6 text-center">Unlock Now!</h3>
+            <form id="nominationForm" class="space-y-6">
+                <div>
+                    <label for="participantName" class="block text-gray-300 text-sm font-medium mb-2">Your Name</label>
+                    <input type="text" id="participantName" name="name" placeholder="John Doe"
+                           class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200" required>
+                </div>
+                <div>
+                    <label for="participantEmail" class="block text-gray-300 text-sm font-medium mb-2">Your Email</label>
+                    <input type="email" id="participantEmail" name="email" placeholder="john.doe@example.com"
+                           class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200" required>
+                </div>
+                <div>
+                    <label for="participantCity" class="block text-gray-300 text-sm font-medium mb-2">Your City</label>
+                    <input type="text" id="participantCity" name="city" placeholder="New York"
+                           class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200" required>
+                </div>
+                <div>
+                    <label for="participantCountry" class="block text-gray-300 text-sm font-medium mb-2">Your Country</label>
+                    <input type="text" id="participantCountry" name="country" placeholder="United States"
+                           class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200" required>
+                </div>
+                <div>
+                    <label for="participantVideo" class="block text-gray-300 text-sm font-medium mb-2">Link to Your Video (optional)</label>
+                    <input type="url" id="participantVideo" name="video" placeholder="https://youtube.com/yourvideo"
+                           class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200">
+                </div>
+                <button type="submit" class="gradient-button w-full text-white font-bold py-3 px-6 rounded-lg text-lg shadow-md hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-opacity-75">
+                    Submit Nomination
+                </button>
+            </form>
+            <div id="messageBox" class="hidden mt-4 p-3 rounded-lg text-center font-semibold" role="alert"></div>
+            <div id="loadingIndicator" class="hidden mt-4 text-center text-gray-400">Loading participants...</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="w-full py-6 bg-transparent text-center text-gray-400 text-sm mt-8">
+        <p>&copy; 2025 The Enspire Challenge. All rights reserved.</p>
+    </footer>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const openModalBtn = document.getElementById('openNominationModal');
+            const closeModalBtn = document.getElementById('closeNominationModal');
+            const nominationModal = document.getElementById('nominationModal');
+            const nominationForm = document.getElementById('nominationForm');
+            const messageBox = document.getElementById('messageBox');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const currentUserIdDisplay = document.getElementById('currentUserIdDisplay');
+
+            const svg = d3.select("#participantWeb");
+            let width = document.getElementById('chart-container').clientWidth;
+            let height = document.getElementById('chart-container').clientHeight;
+
+            // Ensure SVG dimensions are set
+            svg.attr("width", width).attr("height", height);
+
+            let participants = []; // This will now be populated from Firestore
+            let db, auth, userId;
+            let isAuthReady = false;
+
+            // Map variables
+            let map, mapMarkers = [];
+            let locationCache = {}; // Cache for geocoding results
+
+            // Initialize Firebase
+            const firebaseConfig = {
+                apiKey: "AIzaSyBviKwIcOPwg20Fq6PzkNsFlamknh-K59U",
+                authDomain: "campaign-71998.firebaseapp.com",
+                projectId: "campaign-71998",
+                storageBucket: "campaign-71998.firebasestorage.app",
+                messagingSenderId: "492291429116",
+                appId: "1:492291429116:web:33c7000fcba853c630bd79"
+            };
+
+            const appId = 'campaign-71998';
+
+            console.log("App ID:", appId);
+            console.log("Firebase Config:", firebaseConfig);
+
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                // Authenticate user
+                // When running in the Canvas environment, __initial_auth_token will be provided.
+                if (typeof __initial_auth_token !== 'undefined') {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                    console.log("Signed in with custom token.");
+                } else {
+                    // For local testing outside Canvas, sign in anonymously.
+                    // This is essential for Firestore rules requiring `request.auth != null`.
+                    await signInAnonymously(auth);
+                    console.log("Signed in anonymously.");
+                }
+
+                // Listen for auth state changes to get the current user ID
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        currentUserIdDisplay.textContent = `Your User ID: ${userId}`;
+                        currentUserIdDisplay.classList.remove('hidden');
+                        isAuthReady = true;
+                        console.log("Firebase Auth Ready. User ID:", userId);
+                        // Once authenticated, start listening for data
+                        listenForParticipants();
+                    } else {
+                        // This block should ideally not be reached if signInAnonymously succeeds
+                        // This fallback is mostly for robustness but signInAnonymously should always provide a user.
+                        userId = crypto.randomUUID(); // Fallback for truly unauthenticated users
+                        currentUserIdDisplay.textContent = `Your temporary ID: ${userId}`;
+                        currentUserIdDisplay.classList.remove('hidden');
+                        isAuthReady = true;
+                        console.log("Firebase Auth Ready. Anonymous User ID (fallback):", userId);
+                        listenForParticipants();
+                    }
+                });
+
+            } catch (error) {
+                console.error("Error initializing Firebase or authenticating:", error);
+                showMessageBox('error', `Failed to connect to the database: ${error.message}. Check console for details.`);
+                loadingIndicator.classList.add('hidden');
+            }
+
+            // Initialize the world map
+            function initializeMap() {
+                map = L.map('world-map').setView([20, 0], 2);
+                
+                // Add a dark-themed tile layer
+                L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                    subdomains: 'abcd',
+                    maxZoom: 19
+                }).addTo(map);
+                
+                console.log("World map initialized");
+            }
+
+            // Initialize map when DOM is loaded
+            initializeMap();
+
+            // Geocoding function to convert city/country to coordinates
+            async function geocodeLocation(city, country) {
+                const locationKey = `${city}, ${country}`;
+                
+                // Check cache first
+                if (locationCache[locationKey]) {
+                    return locationCache[locationKey];
+                }
+                
+                try {
+                    // Use a free geocoding service
+                    const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(locationKey)}&limit=1`);
+                    const data = await response.json();
+                    
+                    if (data && data.length > 0) {
+                        const coords = [parseFloat(data[0].lat), parseFloat(data[0].lon)];
+                        locationCache[locationKey] = coords;
+                        return coords;
+                    } else {
+                        // Fallback to default coordinates (center of the world)
+                        console.warn(`Could not geocode: ${locationKey}`);
+                        return [20, 0];
+                    }
+                } catch (error) {
+                    console.error('Geocoding error:', error);
+                    return [20, 0]; // Fallback coordinates
+                }
+            }
+
+            // D3.js Force Simulation Setup
+            let simulation = d3.forceSimulation()
+                .force("link", d3.forceLink().id(d => d.id).distance(100))
+                .force("charge", d3.forceManyBody().strength(-300))
+                .force("center", d3.forceCenter(width / 2, height / 2));
+
+            let link = svg.append("g")
+                .attr("stroke", "#999")
+                .attr("stroke-opacity", 0.6)
+                .selectAll("line");
+
+            let node = svg.append("g")
+                .attr("stroke", "#fff")
+                .attr("stroke-width", 1.5)
+                .selectAll("g");
+
+            // Tooltip element
+            const tooltip = d3.select("body").append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 0);
+
+            // Function to update the graph based on new data
+            function updateGraph() {
+                // Update links (if any) - currently not used for this simple web
+                link = link.data([]); // No links
+                link.exit().remove();
+                link = link.enter().append("line").merge(link);
+
+                // Update nodes
+                node = node.data(participants, d => d.id); // Use Firestore doc ID as key for data join
+
+                // Exit old nodes
+                node.exit().transition()
+                    .duration(500)
+                    .attr("opacity", 0)
+                    .remove();
+
+                // Enter new nodes
+                const newNode = node.enter().append("g")
+                    .attr("opacity", 0) // Start invisible for transition
+                    .call(d3.drag()
+                        .on("start", dragstarted)
+                        .on("drag", dragged)
+                        .on("end", dragended));
+
+                newNode.append("circle")
+                    .attr("r", 15) // Radius of nodes
+                    .attr("fill", "#6a11cb")
+                    .attr("stroke", "#e6edf3")
+                    .attr("stroke-width", 1.5)
+                    .on("mouseover", (event, d) => {
+                        tooltip.html(`<strong>${d.name}</strong>`)
+                            .style("left", (event.pageX + 10) + "px")
+                            .style("top", (event.pageY - 28) + "px")
+                            .style("opacity", 1);
+                    })
+                    .on("mouseout", () => {
+                        tooltip.style("opacity", 0);
+                    });
+
+                newNode.append("text")
+                    .attr("dx", 0)
+                    .attr("dy", 4)
+                    .attr("text-anchor", "middle")
+                    .text(d => d.name.split(' ')[0]) // Display first name
+                    .style("font-size", "10px")
+                    .style("fill", "#e6edf3")
+                    .style("pointer-events", "none")
+                    .style("text-shadow", "0 0 3px rgba(0,0,0,0.8)");
+
+
+                // Merge entered and updated nodes
+                node = newNode.merge(node);
+
+                // Transition for new nodes to appear
+                newNode.transition()
+                    .duration(1000)
+                    .attr("opacity", 1);
+
+                // Update simulation with new data
+                simulation.nodes(participants);
+                simulation.alpha(1).restart(); // Restart simulation to incorporate new nodes
+            }
+
+            // Simulation tick function for updating node and link positions
+            simulation.on("tick", () => {
+                node.attr("transform", d => {
+                    // Clamp node positions within bounds
+                    d.x = Math.max(15, Math.min(width - 15, d.x));
+                    d.y = Math.max(15, Math.min(height - 15, d.y));
+                    return `translate(${d.x},${d.y})`;
+                });
+            });
+
+            // Drag functions for nodes
+            function dragstarted(event, d) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                d.fx = d.x;
+                d.fy = d.y;
+            }
+
+            function dragged(event, d) {
+                d.fx = event.x;
+                d.fy = event.y;
+            }
+
+            function dragended(event, d) {
+                if (!event.active) simulation.alphaTarget(0);
+                d.fx = null;
+                d.fy = null;
+            }
+
+            // Firestore real-time listener for participants
+            function listenForParticipants() {
+                if (!db || !isAuthReady) {
+                    console.warn("Firestore not ready or user not authenticated yet. Delaying listener setup.");
+                    // Retry after a short delay if not ready
+                    setTimeout(listenForParticipants, 500);
+                    return;
+                }
+
+                // Public data collection path for nominations
+                const collectionPath = `artifacts/${appId}/public/data/nominations`;
+                console.log("Attempting to listen to Firestore collection:", collectionPath);
+
+                const nominationsColRef = collection(db, collectionPath);
+                const q = query(nominationsColRef);
+
+                loadingIndicator.classList.remove('hidden'); // Show loading indicator
+
+                // onSnapshot provides real-time updates whenever data in the collection changes
+                onSnapshot(q, (snapshot) => {
+                    const newParticipants = []; // Temporary array to build the updated participant list
+                    snapshot.forEach((doc) => {
+                        const data = doc.data();
+                        // Add participant data along with Firestore document ID
+                        newParticipants.push({ 
+                            id: doc.id, 
+                            name: data.name, 
+                            email: data.email,
+                            city: data.city || '',
+                            country: data.country || '',
+                            video: data.video || ''
+                        });
+                    });
+                    participants = newParticipants; // Update the main participants array
+                    console.log("Participants fetched:", participants);
+                    updateGraph(); // Re-render D3 graph with new data
+                    updateMap(); // Update world map with new data
+                    loadingIndicator.classList.add('hidden'); // Hide loading indicator
+                    if (participants.length === 0) {
+                        console.log("No participants found yet in Firestore.");
+                    }
+                }, (error) => {
+                    // Error handling for Firestore listener
+                    console.error("Error fetching participants from Firestore:", error);
+                    showMessageBox('error', `Failed to load participants: ${error.message}. Check console for details.`);
+                    loadingIndicator.classList.add('hidden');
+                });
+            }
+
+            // Modal functionality
+            openModalBtn.addEventListener('click', () => {
+                nominationModal.classList.remove('hidden');
+                // Initiate fade-in and scale-up transition
+                setTimeout(() => {
+                    nominationModal.classList.remove('opacity-0');
+                    nominationModal.querySelector('.modal-content').classList.remove('scale-95');
+                }, 10); // Small delay to allow 'hidden' class removal before transition starts
+            });
+
+            closeModalBtn.addEventListener('click', () => {
+                // Initiate fade-out and scale-down transition
+                nominationModal.classList.add('opacity-0');
+                nominationModal.querySelector('.modal-content').classList.add('scale-95');
+                setTimeout(() => {
+                    nominationModal.classList.add('hidden'); // Hide after transition
+                }, 300); // Wait for transition to finish (matches CSS transition duration)
+                hideMessageBox(); // Hide any form submission messages
+            });
+
+            // Close modal when clicking outside of the content area
+            nominationModal.addEventListener('click', (e) => {
+                if (e.target === nominationModal) {
+                    closeModalBtn.click(); // Trigger close button click logic
+                }
+            });
+
+            // Form submission handler
+            nominationForm.addEventListener('submit', async (e) => {
+                e.preventDefault(); // Prevent default form submission behavior (page reload)
+                const nameInput = document.getElementById('participantName');
+                const emailInput = document.getElementById('participantEmail');
+                const cityInput = document.getElementById('participantCity');
+                const countryInput = document.getElementById('participantCountry');
+                const videoInput = document.getElementById('participantVideo');
+
+                const newName = nameInput.value.trim();
+                const newEmail = emailInput.value.trim();
+                const newCity = cityInput.value.trim();
+                const newCountry = countryInput.value.trim();
+                const newVideo = videoInput.value.trim();
+
+                if (newName && newEmail && newCity && newCountry) {
+                    if (!db || !isAuthReady) {
+                        showMessageBox('error', 'Database not ready. Please wait a moment and try again.');
+                        console.error("Attempted to submit form before Firebase was ready.");
+                        return;
+                    }
+
+                    try {
+                        const collectionPath = `artifacts/${appId}/public/data/nominations`;
+                        console.log("Attempting to add document to Firestore collection:", collectionPath);
+                        const nominationsColRef = collection(db, collectionPath);
+                        // Add a new document to the 'nominations' collection
+                        await addDoc(nominationsColRef, {
+                            name: newName,
+                            email: newEmail,
+                            city: newCity,
+                            country: newCountry,
+                            video: newVideo,
+                            timestamp: serverTimestamp(), // Record server time of submission
+                            submittedBy: userId // Store the user ID of the submitter
+                        });
+                        showMessageBox('success', 'Thank you for your nomination! You\'ve been added to the web.');
+                        nominationForm.reset(); // Clear the form fields
+                        // The onSnapshot listener will automatically update the D3 graph,
+                        // so no manual updateGraph() call is needed here.
+                    } catch (error) {
+                        console.error("Error adding document to Firestore: ", error);
+                        showMessageBox('error', `Failed to submit nomination: ${error.message}. Check console for details.`);
+                    }
+                } else {
+                    showMessageBox('error', 'Please fill in all fields.');
+                }
+            });
+
+            // Function to display messages (success/error) to the user
+            function showMessageBox(type, message) {
+                messageBox.textContent = message;
+                // Remove existing classes and add new ones based on message type
+                messageBox.classList.remove('hidden', 'bg-green-600', 'bg-red-600', 'text-green-100', 'text-red-100');
+                if (type === 'success') {
+                    messageBox.classList.add('bg-green-600', 'text-green-100');
+                } else if (type === 'error') {
+                    messageBox.classList.add('bg-red-600', 'text-red-100');
+                }
+            }
+
+            // Function to hide the message box
+            function hideMessageBox() {
+                messageBox.classList.add('hidden');
+            }
+
+            // Handle window resize for D3.js responsiveness
+            window.addEventListener('resize', () => {
+                // Update width and height based on container's current size
+                width = document.getElementById('chart-container').clientWidth;
+                height = document.getElementById('chart-container').clientHeight;
+                svg.attr("width", width).attr("height", height);
+                // Re-center the D3 simulation and restart it with a small alpha
+                simulation.force("center", d3.forceCenter(width / 2, height / 2));
+                simulation.alpha(0.3).restart();
+            });
+
+            // Update map with participant locations
+            async function updateMap() {
+                // Clear existing markers
+                mapMarkers.forEach(marker => map.removeLayer(marker));
+                mapMarkers = [];
+                
+                const locationStats = {};
+                
+                for (const participant of participants) {
+                    if (participant.city && participant.country) {
+                        const coords = await geocodeLocation(participant.city, participant.country);
+                        
+                        // Create custom marker
+                        const customIcon = L.divIcon({
+                            className: 'participant-marker',
+                            html: `<div style="background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); border: 2px solid #e6edf3; border-radius: 50%; width: 20px; height: 20px;"></div>`,
+                            iconSize: [20, 20],
+                            iconAnchor: [10, 10]
+                        });
+                        
+                        const marker = L.marker(coords, { icon: customIcon }).addTo(map);
+                        
+                        // Add popup with participant info
+                        let popupHtml = `
+                            <div style=\"text-align: center;\">
+                                <strong style=\"color: #6a11cb;\">${participant.name}</strong><br>
+                                <small style=\"color: #888;\">${participant.city}, ${participant.country}</small><br>`;
+                        if (participant.video) {
+                            popupHtml += `<a href=\"${participant.video}\" target=\"_blank\" class=\"gradient-button mt-2 inline-block px-4 py-2 rounded text-white font-bold\">View Video</a>`;
+                        }
+                        popupHtml += `</div>`;
+                        marker.bindPopup(popupHtml);
+                        
+                        mapMarkers.push(marker);
+                        
+                        // Update location stats
+                        const locationKey = `${participant.city}, ${participant.country}`;
+                        locationStats[locationKey] = (locationStats[locationKey] || 0) + 1;
+                    }
+                }
+                
+                // Update stats display
+                const statsElement = document.getElementById('map-stats');
+                const totalLocations = Object.keys(locationStats).length;
+                const totalParticipants = participants.length;
+                statsElement.innerHTML = `
+                    <div>Total: ${totalParticipants} participants</div>
+                    <div>Locations: ${totalLocations} cities</div>
+                `;
+                
+                console.log("Map updated with", mapMarkers.length, "participants");
+            }
+        });
+    </script>
+</body>
+</html>

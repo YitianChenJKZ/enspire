@@ -1,0 +1,27 @@
+{
+  "name": "nomination-campaign",
+  "version": "1.0.0",
+  "description": "The Ultimate Nomination Challenge - Interactive participant web",
+  "main": "nomination.html",
+  "scripts": {
+    "serve": "firebase serve",
+    "deploy": "firebase deploy",
+    "build": "echo 'No build step required for static HTML'",
+    "start": "firebase serve"
+  },
+  "keywords": [
+    "nomination",
+    "campaign",
+    "firebase",
+    "d3",
+    "interactive"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "firebase-tools": "^13.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+} 
