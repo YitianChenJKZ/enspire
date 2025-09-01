@@ -32,7 +32,7 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Logo and Company Info */}
           <div className="flex flex-col items-start space-y-4">
-            <img src="components/logo.jpg" alt="Enspire Logo" className="h-16" />
+            <img src="/images/logo.jpg" alt="Enspire Logo" className="h-16" />
             <p className="text-sm text-gray-500 max-w-xs">
               "Enspire AI? Can AI pay uni tuition?" — my mum
             </p>

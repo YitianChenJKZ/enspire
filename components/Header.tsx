@@ -17,7 +17,7 @@ const Header: React.FC = () => {
             <div className="relative">
               <div className="absolute inset-0 w-36 h-36 bg-gradient-to-r from-blue-400 to-purple-500 rounded-lg blur-xl opacity-60 animate-pulse"></div>
               <img 
-                src="./components/logo.jpg" 
+                src="/images/logo.jpg" 
                 alt="Enspire Logo" 
                 className="relative w-36 h-36 rounded-lg object-cover shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105"
               />

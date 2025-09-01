@@ -137,21 +137,21 @@ const FeaturesSection: React.FC = () => {
                                         {/* Podcast Apps - Only companies with available logos */}
                                         <AppIcon name="Spotify" bgColor="bg-transparent">
                                             <img 
-                                                src="Company logos/Spotify_Primary_Logo_RGB_Green.png" 
+                                                src="/images/Spotify_Primary_Logo_RGB_Green.png" 
                                                 alt="Spotify" 
                                                 className="w-10 h-10 object-contain"
                                             />
                                         </AppIcon>
                                         <AppIcon name="Apple" bgColor="bg-transparent">
                                             <img 
-                                                src="Company logos/Apple-Logo-700x394.png" 
+                                                src="/images/Apple-Logo-700x394.png" 
                                                 alt="Apple" 
                                                 className="w-10 h-10 object-contain"
                                             />
                                         </AppIcon>
                                         <AppIcon name="Google" bgColor="bg-transparent">
                                             <img 
-                                                src="Company logos/google-wordmarks-2x.webp=n-w200-h64-fcrop64=1,00000000ffffffff-rw" 
+                                                src="/images/google-wordmarks-2x.webp=n-w200-h64-fcrop64=1,00000000ffffffff-rw" 
                                                 alt="Google" 
                                                 className="w-10 h-10 object-contain"
                                             />
@@ -161,28 +161,28 @@ const FeaturesSection: React.FC = () => {
                                         {/* Note-taking Apps - Only companies with available logos */}
                                         <AppIcon name="Notes" bgColor="bg-transparent">
                                             <img 
-                                                src="Company logos/icons8-notes-100.png" 
+                                                src="/images/icons8-notes-100.png" 
                                                 alt="Notes" 
                                                 className="w-10 h-10 object-contain"
                                             />
                                         </AppIcon>
                                         <AppIcon name="Evernote" bgColor="bg-transparent">
                                             <img 
-                                                src="Company logos/Evernote-Logo-700x394.png" 
+                                                src="/images/Evernote-Logo-700x394.png" 
                                                 alt="Evernote" 
                                                 className="w-10 h-10 object-contain"
                                             />
                                         </AppIcon>
                                         <AppIcon name="Notion" bgColor="bg-transparent">
                                             <img 
-                                                src="Company logos/Notion-logo.svg.png" 
+                                                src="/images/Notion-logo.svg.png" 
                                                 alt="Notion" 
                                                 className="w-10 h-10 object-contain"
                                             />
                                         </AppIcon>
                                         <AppIcon name="OneNote" bgColor="bg-transparent">
                                             <img 
-                                                src="Company logos/Microsoft_Office_OneNote_(2019–present).svg.png" 
+                                                src="/images/Microsoft_Office_OneNote_(2019–present).svg.png" 
                                                 alt="OneNote" 
                                                 className="w-10 h-10 object-contain"
                                             />
@@ -235,7 +235,7 @@ const FeaturesSection: React.FC = () => {
                                                 
                                                 {/* Logo image */}
                                                 <img 
-                                                    src="components/logo.jpg" 
+                                                    src="/images/logo.jpg" 
                                                     alt="Enspire Logo" 
                                                     className="w-12 h-12 rounded-lg object-cover relative z-10 animate-logo-float"
                                                 />
