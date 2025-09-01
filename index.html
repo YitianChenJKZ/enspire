@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enspire</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      .node-item {
+        animation-name: fade-in-node, pulse-node;
+        animation-duration: 0.5s, 2.5s;
+        animation-timing-function: ease-out, ease-in-out;
+        animation-fill-mode: forwards, normal;
+        animation-iteration-count: 1, infinite;
+      }
+      .node-line {
+        stroke-dasharray: 1000;
+        stroke-dashoffset: 1000;
+        animation: draw-line 1s ease-out forwards;
+      }
+      @keyframes fade-in-node {
+        from { opacity: 0; transform: scale(0.5); }
+        to { opacity: 1; transform: scale(1); }
+      }
+      @keyframes draw-line {
+        to { stroke-dashoffset: 0; }
+      }
+      @keyframes pulse-node {
+        0%, 100% { box-shadow: 0 0 15px 3px rgba(59,130,246,0.7); }
+        50% { box-shadow: 0 0 25px 8px rgba(59,130,246,0.9); }
+      }
+
+      /* Initial Load Animations */
+      @keyframes slide-down {
+        from { transform: translateY(-100%); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+      }
+      .header-animate {
+        animation: slide-down 0.7s ease-out forwards;
+      }
+      
+      @keyframes fade-in-up-anim {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fade-in-up {
+        animation: fade-in-up-anim 0.6s ease-out forwards;
+        opacity: 0; /* Start hidden before animation */
+      }
+
+      /* Scroll Animations */
+      .fade-in-up {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+      .fade-in-up.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Enspire Logo Advanced Animations */
+      @keyframes float-1 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        25% { transform: translate(8px, -8px) scale(1.1); }
+        50% { transform: translate(0, -12px) scale(0.9); }
+        75% { transform: translate(-8px, -8px) scale(1.05); }
+      }
+      @keyframes float-2 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        25% { transform: translate(-8px, 8px) scale(0.9); }
+        50% { transform: translate(-12px, 0) scale(1.1); }
+        75% { transform: translate(-8px, -8px) scale(0.95); }
+      }
+      @keyframes float-3 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(6px, -6px) scale(1.05); }
+        66% { transform: translate(-6px, 6px) scale(0.95); }
+      }
+      @keyframes float-4 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(-6px, -6px) scale(0.9); }
+        66% { transform: translate(6px, 6px) scale(1.1); }
+      }
+      @keyframes float-5 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        50% { transform: translate(0, -8px) scale(1.1); }
+      }
+      @keyframes float-6 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        50% { transform: translate(0, 8px) scale(0.9); }
+      }
+
+      @keyframes spin-slow {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      @keyframes spin-reverse {
+        from { transform: rotate(360deg); }
+        to { transform: rotate(0deg); }
+      }
+
+      @keyframes pulse-wave-1 {
+        0%, 100% { transform: scale(1); opacity: 0.1; }
+        50% { transform: scale(1.2); opacity: 0.2; }
+      }
+      @keyframes pulse-wave-2 {
+        0%, 100% { transform: scale(1); opacity: 0.08; }
+        50% { transform: scale(1.15); opacity: 0.15; }
+      }
+      @keyframes pulse-wave-3 {
+        0%, 100% { transform: scale(1); opacity: 0.06; }
+        50% { transform: scale(1.1); opacity: 0.12; }
+      }
+
+      @keyframes glow-pulse {
+        0%, 100% { 
+          box-shadow: 0 0 20px rgba(59, 130, 246, 0.6), 0 0 40px rgba(139, 92, 246, 0.4);
+        }
+        50% { 
+          box-shadow: 0 0 30px rgba(59, 130, 246, 0.8), 0 0 60px rgba(139, 92, 246, 0.6);
+        }
+      }
+
+      @keyframes logo-float {
+        0%, 100% { transform: translateY(0) scale(1); }
+        50% { transform: translateY(-2px) scale(1.02); }
+      }
+
+      @keyframes sparkle-1 {
+        0%, 100% { opacity: 0.8; transform: scale(1) rotate(0deg); }
+        25% { opacity: 1; transform: scale(1.2) rotate(90deg); }
+        50% { opacity: 0.6; transform: scale(0.8) rotate(180deg); }
+        75% { opacity: 1; transform: scale(1.1) rotate(270deg); }
+      }
+      @keyframes sparkle-2 {
+        0%, 100% { opacity: 0.7; transform: scale(1) rotate(0deg); }
+        25% { opacity: 0.9; transform: scale(1.1) rotate(-90deg); }
+        50% { opacity: 0.5; transform: scale(0.9) rotate(-180deg); }
+        75% { opacity: 0.8; transform: scale(1.05) rotate(-270deg); }
+      }
+
+      @keyframes draw-path {
+        0% { stroke-dasharray: 0 1000; }
+        100% { stroke-dasharray: 1000 0; }
+      }
+
+      .animate-float-1 { animation: float-1 4s ease-in-out infinite; }
+      .animate-float-2 { animation: float-2 4.5s ease-in-out infinite; }
+      .animate-float-3 { animation: float-3 3.5s ease-in-out infinite; }
+      .animate-float-4 { animation: float-4 4.2s ease-in-out infinite; }
+      .animate-float-5 { animation: float-5 3s ease-in-out infinite; }
+      .animate-float-6 { animation: float-6 3.8s ease-in-out infinite; }
+      .animate-spin-slow { animation: spin-slow 20s linear infinite; }
+      .animate-spin-reverse { animation: spin-reverse 15s linear infinite; }
+      .animate-pulse-wave-1 { animation: pulse-wave-1 3s ease-in-out infinite; }
+      .animate-pulse-wave-2 { animation: pulse-wave-2 3.5s ease-in-out infinite; }
+      .animate-pulse-wave-3 { animation: pulse-wave-3 4s ease-in-out infinite; }
+      .animate-glow-pulse { animation: glow-pulse 2s ease-in-out infinite; }
+      .animate-logo-float { animation: logo-float 3s ease-in-out infinite; }
+      .animate-sparkle-1 { animation: sparkle-1 2.5s ease-in-out infinite; }
+      .animate-sparkle-2 { animation: sparkle-2 3s ease-in-out infinite; }
+      .animate-draw-path { animation: draw-path 2s ease-out forwards; }
+    </style>
+    <script type="module" crossorigin src="/enspire/assets/index-DoXjiB28.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
