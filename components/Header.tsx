@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
-import NavigationBar from './NavigationBar';
 
 const Header: React.FC = () => {
   const [showSignInMessage, setShowSignInMessage] = useState(false);
 
   return (
     <header className="absolute top-0 left-0 right-0 z-10 pt-12 pb-2 header-animate">
-      {/* Navigation Bar */}
-      <NavigationBar />
-      
       <div className="container mx-auto px-6">
         <nav className="flex items-center justify-between">
           {/* Logo */}
