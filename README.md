@@ -1,20 +1,7 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+Enspire is a pre-seed stage multinational tech startup specialising in an audio-based content diffusion platform: enspire.lol
 
-# Run and deploy your AI Studio app
+Enspire brings your notes, takeaways, and communities into one place — and builds neural connections between episodes and concepts so it empowers your inspiration.
 
-This contains everything you need to run your app locally.
+Enspire automatically builds connections between episodes and concepts, giving you a private, explorable map of everything you've absorbed - like a second brain.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1wjYcYu5aB37HeQNNbHjK6Hk5KQ_w_wUy
-
-## Run Locally
-
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Its mission is to develop human-first AI that will accelerate the interface between human-machine communication in the new AI era, through non-intrusive means using the Enspire Brain (eBrain).
