@@ -293,8 +293,8 @@ const HeroSection: React.FC = () => {
       {/* Main content */}
       <div className="container mx-auto px-6 relative z-10">
         {/* Hero text */}
-        <div className="text-center max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+        <div className="text-center max-w-4xl mx-auto px-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight">
             Transform your
             
             podcasts
@@ -303,31 +303,31 @@ const HeroSection: React.FC = () => {
             </span>
             
           </h1>
-          <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed">
           Enspire AI brings your notes, takeaways, and communities into one place — and builds neural connections between episodes and brain so it empowers your inspiration.
           </p>
           
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <a href="#waitlist" className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
+            <a href="#waitlist" className="w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold text-sm sm:text-base rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg">
                Join Waitlist
             </a>
-            <a href="#demo" className="px-8 py-4 border border-white text-white font-semibold rounded-lg hover:bg-white hover:text-gray-900 transition-all">
+            <a href="#demo" className="w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-4 border border-white text-white font-semibold text-sm sm:text-base rounded-lg hover:bg-white hover:text-gray-900 transition-all">
               Watch Demo
             </a>
           </div>
         </div>
       </div>
       
-      <div id="learning" ref={learningSectionRef} className="container mx-auto px-6 relative z-10 mt-32 md:mt-48">
-        <h2 className="text-4xl md:text-5xl font-bold text-white fade-in-up text-center">Listening, Learning, Playing. We've got it all covered.</h2>
-        <p className="max-w-2xl mx-auto mt-4 text-gray-300 fade-in-up text-center" style={{ transitionDelay: '0.2s' }}>
+      <div id="learning" ref={learningSectionRef} className="container mx-auto px-4 sm:px-6 relative z-10 mt-20 sm:mt-32 md:mt-48">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white fade-in-up text-center px-4">Listening, Learning, Playing. We've got it all covered.</h2>
+        <p className="max-w-2xl mx-auto mt-4 text-sm sm:text-base md:text-lg text-gray-300 fade-in-up text-center px-4" style={{ transitionDelay: '0.2s' }}>
           Enspire Brain (eBrain)automatically builds connections between episodes and concepts, giving you a private, explorable network of everything you've absorbed - like a second brain.
         </p>
         
         {/* Interactive Knowledge Network */}
-        <div className="text-center mt-12">
-          <div className="relative max-w-5xl mx-auto h-[500px] bg-[#0c1229]/40 border border-gray-700 rounded-2xl overflow-hidden">
+        <div className="text-center mt-8 sm:mt-12">
+          <div className="relative max-w-5xl mx-auto h-[300px] sm:h-[400px] md:h-[500px] bg-[#0c1229]/40 border border-gray-700 rounded-2xl overflow-hidden mx-4">
             {/* Network connections */}
             <svg className="absolute inset-0 w-full h-full">
               {connections.map(([nodeA, nodeB], index) => {

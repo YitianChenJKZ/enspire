@@ -46,9 +46,9 @@ const FeaturesSection: React.FC = () => {
             <div className="container mx-auto px-6">
 
                 {/* Smarter Listening Section */}
-                <div id="demo" className="text-center mb-32">
-                    <h2 className="text-4xl md:text-5xl font-bold text-white fade-in-up">Let us show you what smarter listening looks like.</h2>
-                    <p className="max-w-xl mx-auto mt-4 text-gray-400 fade-in-up" style={{ transitionDelay: '0.2s' }}>This quick demo walks you through how Enspire makes your eBrain – step by step.</p>
+                <div id="demo" className="text-center mb-20 sm:mb-32">
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white fade-in-up px-4">Let us show you what smarter listening looks like.</h2>
+                    <p className="max-w-xl mx-auto mt-4 text-sm sm:text-base text-gray-400 fade-in-up px-4" style={{ transitionDelay: '0.2s' }}>This quick demo walks you through how Enspire makes your eBrain – step by step.</p>
                     <div className="fade-in-up mt-12 max-w-5xl mx-auto" style={{ transitionDelay: '0.4s' }}>
                         <div style={{
                           position: 'relative',
@@ -78,39 +78,39 @@ const FeaturesSection: React.FC = () => {
                 </div>
 
                 {/* 3-Column Features */}
-                <div className="grid md:grid-cols-3 gap-12 max-w-6xl mx-auto mb-32">
+                <div className="grid md:grid-cols-3 gap-8 sm:gap-12 max-w-6xl mx-auto mb-20 sm:mb-32 px-4">
                     <div className="text-center md:text-left fade-in-up">
                         <div className="inline-block p-3 rounded-full bg-blue-500/10 ring-1 ring-blue-500/20 mb-4">
                             <BrainIcon className="w-6 h-6 text-blue-400" />
                         </div>
-                        <h3 className="text-xl font-bold text-white">You listen. Enspire remembers.</h3>
-                        <p className="mt-2 text-gray-400">Capture the moments that spark ideas, rescue key insights, and build a personal memory footprint that actually inspires.</p>
+                        <h3 className="text-lg sm:text-xl font-bold text-white">You listen. Enspire remembers.</h3>
+                        <p className="mt-2 text-sm sm:text-base text-gray-400">Capture the moments that spark ideas, rescue key insights, and build a personal memory footprint that actually inspires.</p>
                     </div>
                      <div className="text-center md:text-left fade-in-up" style={{ transitionDelay: '0.2s' }}>
                         <div className="inline-block p-3 rounded-full bg-blue-500/10 ring-1 ring-blue-500/20 mb-4">
                             <ConnectionIcon className="w-6 h-6 text-blue-400" />
                         </div>
-                        <h3 className="text-xl font-bold text-white">Get the podcast you want. Instantly.</h3>
-                        <p className="mt-2 text-gray-400">Our proprietary semantic NLP search engine goes much deeper, to connect ideas across episodes – so never miss a beat finding your interests.</p>
+                        <h3 className="text-lg sm:text-xl font-bold text-white">Get the podcast you want. Instantly.</h3>
+                        <p className="mt-2 text-sm sm:text-base text-gray-400">Our proprietary semantic NLP search engine goes much deeper, to connect ideas across episodes – so never miss a beat finding your interests.</p>
                     </div>
                      <div className="text-center md:text-left fade-in-up" style={{ transitionDelay: '0.4s' }}>
                         <div className="inline-block p-3 rounded-full bg-blue-500/10 ring-1 ring-blue-500/20 mb-4">
                             <SearchIcon className="w-6 h-6 text-blue-400" />
                         </div>
-                        <h3 className="text-xl font-bold text-white">Turn episodes into inspiration, not noise.</h3>
-                        <p className="mt-2 text-gray-400">With vector embedding models that build neural link maps and smart recommendations, Enspire transforms podcasts into your personalized knowledge.</p>
+                        <h3 className="text-lg sm:text-xl font-bold text-white">Turn episodes into inspiration, not noise.</h3>
+                        <p className="mt-2 text-sm sm:text-base text-gray-400">With vector embedding models that build neural link maps and smart recommendations, Enspire transforms podcasts into your personalized knowledge.</p>
                     </div>
                 </div>
 
                 {/* Difference Section */}
                 <div className="text-center">
-                    <h2 className="text-4xl md:text-5xl font-bold text-white fade-in-up">See the difference</h2>
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white fade-in-up px-4">See the difference</h2>
                     <div className="fade-in-up" style={{ transitionDelay: '0.2s' }}>
-                        <div className="mt-12 max-w-2xl mx-auto bg-[#0c1229]/80 border border-gray-700 rounded-xl p-8">
-                            <div className="flex justify-center space-x-8 mb-8">
+                        <div className="mt-8 sm:mt-12 max-w-2xl mx-auto bg-[#0c1229]/80 border border-gray-700 rounded-xl p-4 sm:p-6 lg:p-8 mx-4">
+                            <div className="flex justify-center space-x-4 sm:space-x-6 lg:space-x-8 mb-6 sm:mb-8">
                                 <button 
                                     onClick={() => setActiveTab('without')}
-                                    className={`font-semibold transition-all duration-300 ${
+                                    className={`text-sm sm:text-base font-semibold transition-all duration-300 ${
                                         activeTab === 'without' 
                                             ? 'text-white relative after:content-[""] after:absolute after:left-0 after:right-0 after:-bottom-2 after:h-0.5 after:bg-red-500' 
                                             : 'text-gray-500 hover:text-gray-300'
@@ -120,7 +120,7 @@ const FeaturesSection: React.FC = () => {
                                 </button>
                                 <button 
                                     onClick={() => setActiveTab('with')}
-                                    className={`font-semibold transition-all duration-300 ${
+                                    className={`text-sm sm:text-base font-semibold transition-all duration-300 ${
                                         activeTab === 'with' 
                                             ? 'text-white relative after:content-[""] after:absolute after:left-0 after:right-0 after:-bottom-2 after:h-0.5 after:bg-blue-500' 
                                             : 'text-gray-500 hover:text-gray-300'
