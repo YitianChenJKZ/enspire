@@ -150,11 +150,9 @@ const FeaturesSection: React.FC = () => {
                                             />
                                         </AppIcon>
                                         <AppIcon name="Google" bgColor="bg-transparent">
-                                            <img 
-                                                src="/images/google-wordmarks-2x.webp=n-w200-h64-fcrop64=1,00000000ffffffff-rw" 
-                                                alt="Google" 
-                                                className="w-10 h-10 object-contain"
-                                            />
+                                            <div className="w-10 h-10 bg-white rounded flex items-center justify-center">
+                                                <span className="text-gray-800 font-bold text-sm">G</span>
+                                            </div>
                                         </AppIcon>
                                     </div>
                                     <div className="grid grid-cols-3 md:grid-cols-4 gap-4 items-center">

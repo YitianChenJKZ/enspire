@@ -28,9 +28,11 @@ const Header: React.FC = () => {
             <div className="relative group">
               {/* Purple glow effect */}
               <div className="absolute inset-0 w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full blur-lg opacity-40 group-hover:opacity-60 transition-opacity duration-300"></div>
-              <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center shadow-2xl group-hover:shadow-purple-500/25 transition-all duration-300 transform group-hover:scale-105">
-                <span className="text-white font-bold text-lg sm:text-xl">E</span>
-              </div>
+              <img 
+                src="/images/logo.jpg" 
+                alt="Enspire Logo" 
+                className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover shadow-2xl group-hover:shadow-purple-500/25 transition-all duration-300 transform group-hover:scale-105"
+              />
             </div>
           </div>
 
