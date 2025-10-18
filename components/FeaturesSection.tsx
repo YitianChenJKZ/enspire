@@ -42,7 +42,7 @@ const FeaturesSection: React.FC = () => {
     }, []);
 
     return (
-        <section id="features" className="py-24" ref={sectionRef}>
+        <section id="features" className="py-24 bg-gradient-to-br from-gray-900 via-purple-900/20 to-blue-900/20" ref={sectionRef}>
             <div className="container mx-auto px-6">
 
                 {/* Smarter Listening Section */}
@@ -79,26 +79,26 @@ const FeaturesSection: React.FC = () => {
 
                 {/* 3-Column Features */}
                 <div className="grid md:grid-cols-3 gap-8 sm:gap-12 max-w-6xl mx-auto mb-20 sm:mb-32 px-4">
-                    <div className="text-center md:text-left fade-in-up">
-                        <div className="inline-block p-3 rounded-full bg-blue-500/10 ring-1 ring-blue-500/20 mb-4">
-                            <BrainIcon className="w-6 h-6 text-blue-400" />
+                    <div className="text-center md:text-left fade-in-up group">
+                        <div className="inline-block p-4 rounded-2xl bg-gradient-to-r from-purple-500/10 to-blue-500/10 ring-1 ring-purple-500/20 mb-6 group-hover:ring-purple-500/40 transition-all">
+                            <BrainIcon className="w-8 h-8 text-purple-400" />
                         </div>
-                        <h3 className="text-lg sm:text-xl font-bold text-white">You listen. Enspire remembers.</h3>
-                        <p className="mt-2 text-sm sm:text-base text-gray-400">Capture the moments that spark ideas, rescue key insights, and build a personal memory footprint that actually inspires.</p>
+                        <h3 className="text-xl sm:text-2xl font-bold text-white mb-4">You listen. Enspire remembers.</h3>
+                        <p className="text-gray-300 leading-relaxed">Capture the moments that spark ideas, rescue key insights, and build a personal memory footprint that actually inspires.</p>
                     </div>
-                     <div className="text-center md:text-left fade-in-up" style={{ transitionDelay: '0.2s' }}>
-                        <div className="inline-block p-3 rounded-full bg-blue-500/10 ring-1 ring-blue-500/20 mb-4">
-                            <ConnectionIcon className="w-6 h-6 text-blue-400" />
+                     <div className="text-center md:text-left fade-in-up group" style={{ transitionDelay: '0.2s' }}>
+                        <div className="inline-block p-4 rounded-2xl bg-gradient-to-r from-purple-500/10 to-blue-500/10 ring-1 ring-purple-500/20 mb-6 group-hover:ring-purple-500/40 transition-all">
+                            <ConnectionIcon className="w-8 h-8 text-purple-400" />
                         </div>
-                        <h3 className="text-lg sm:text-xl font-bold text-white">Get the podcast you want. Instantly.</h3>
-                        <p className="mt-2 text-sm sm:text-base text-gray-400">Our proprietary semantic NLP search engine goes much deeper, to connect ideas across episodes – so never miss a beat finding your interests.</p>
+                        <h3 className="text-xl sm:text-2xl font-bold text-white mb-4">Get the podcast you want. Instantly.</h3>
+                        <p className="text-gray-300 leading-relaxed">Our proprietary semantic NLP search engine goes much deeper, to connect ideas across episodes – so never miss a beat finding your interests.</p>
                     </div>
-                     <div className="text-center md:text-left fade-in-up" style={{ transitionDelay: '0.4s' }}>
-                        <div className="inline-block p-3 rounded-full bg-blue-500/10 ring-1 ring-blue-500/20 mb-4">
-                            <SearchIcon className="w-6 h-6 text-blue-400" />
+                     <div className="text-center md:text-left fade-in-up group" style={{ transitionDelay: '0.4s' }}>
+                        <div className="inline-block p-4 rounded-2xl bg-gradient-to-r from-purple-500/10 to-blue-500/10 ring-1 ring-purple-500/20 mb-6 group-hover:ring-purple-500/40 transition-all">
+                            <SearchIcon className="w-8 h-8 text-purple-400" />
                         </div>
-                        <h3 className="text-lg sm:text-xl font-bold text-white">Turn episodes into inspiration, not noise.</h3>
-                        <p className="mt-2 text-sm sm:text-base text-gray-400">With vector embedding models that build neural link maps and smart recommendations, Enspire transforms podcasts into your personalized knowledge.</p>
+                        <h3 className="text-xl sm:text-2xl font-bold text-white mb-4">Turn episodes into inspiration, not noise.</h3>
+                        <p className="text-gray-300 leading-relaxed">With vector embedding models that build neural link maps and smart recommendations, Enspire transforms podcasts into your personalized knowledge.</p>
                     </div>
                 </div>
 
@@ -106,24 +106,24 @@ const FeaturesSection: React.FC = () => {
                 <div className="text-center">
                     <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white fade-in-up px-4">See the difference</h2>
                     <div className="fade-in-up" style={{ transitionDelay: '0.2s' }}>
-                        <div className="mt-8 sm:mt-12 max-w-2xl mx-auto bg-[#0c1229]/80 border border-gray-700 rounded-xl p-4 sm:p-6 lg:p-8 mx-4">
-                            <div className="flex justify-center space-x-4 sm:space-x-6 lg:space-x-8 mb-6 sm:mb-8">
+                        <div className="mt-8 sm:mt-12 max-w-2xl mx-auto bg-gray-900/80 border border-purple-500/20 rounded-2xl p-6 sm:p-8 mx-4 backdrop-blur-sm">
+                            <div className="flex justify-center space-x-6 sm:space-x-8 mb-8">
                                 <button 
                                     onClick={() => setActiveTab('without')}
-                                    className={`text-sm sm:text-base font-semibold transition-all duration-300 ${
+                                    className={`text-base font-semibold transition-all duration-300 px-4 py-2 rounded-lg ${
                                         activeTab === 'without' 
-                                            ? 'text-white relative after:content-[""] after:absolute after:left-0 after:right-0 after:-bottom-2 after:h-0.5 after:bg-red-500' 
-                                            : 'text-gray-500 hover:text-gray-300'
+                                            ? 'text-white bg-red-500/20 border border-red-500/30' 
+                                            : 'text-gray-400 hover:text-white hover:bg-white/5'
                                     }`}
                                 >
                                     Without Enspire
                                 </button>
                                 <button 
                                     onClick={() => setActiveTab('with')}
-                                    className={`text-sm sm:text-base font-semibold transition-all duration-300 ${
+                                    className={`text-base font-semibold transition-all duration-300 px-4 py-2 rounded-lg ${
                                         activeTab === 'with' 
-                                            ? 'text-white relative after:content-[""] after:absolute after:left-0 after:right-0 after:-bottom-2 after:h-0.5 after:bg-blue-500' 
-                                            : 'text-gray-500 hover:text-gray-300'
+                                            ? 'text-white bg-purple-500/20 border border-purple-500/30' 
+                                            : 'text-gray-400 hover:text-white hover:bg-white/5'
                                     }`}
                                 >
                                     With Enspire

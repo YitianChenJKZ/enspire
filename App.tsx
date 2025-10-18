@@ -13,7 +13,7 @@ const App: React.FC = () => {
   console.log('App component rendering...');
   
   return (
-    <div className="bg-[#05091a] text-gray-300 font-sans antialiased overflow-x-hidden min-h-screen">
+    <div className="bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-gray-300 font-sans antialiased overflow-x-hidden min-h-screen">
       <Header />
       <main>
         <HeroSection />

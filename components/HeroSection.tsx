@@ -270,16 +270,16 @@ const HeroSection: React.FC = () => {
 
   return (
     <section id="hero" className="relative pt-40 pb-24 overflow-hidden">
-      {/* Dark blue galaxy background */}
-      <div className="absolute inset-0 z-0 bg-[#05091a]"></div>
-      <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_center,_rgba(29,78,216,0.15)_0%,_rgba(5,9,26,0)_60%)]"></div>
+      {/* Modern gradient background */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900"></div>
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_center,_rgba(147,51,234,0.3)_0%,_rgba(59,130,246,0.2)_50%,_rgba(0,0,0,0)_70%)]"></div>
       
-      {/* Galaxy stars effect */}
+      {/* Floating particles effect */}
       <div className="absolute inset-0 z-0">
-        {[...Array(80)].map((_, i) => (
+        {[...Array(60)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 bg-white rounded-full animate-pulse"
+            className="absolute w-1 h-1 bg-white/60 rounded-full animate-pulse"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -290,32 +290,55 @@ const HeroSection: React.FC = () => {
         ))}
       </div>
 
+      {/* Large purple glow effect */}
+      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"></div>
+
       {/* Main content */}
       <div className="container mx-auto px-6 relative z-10">
         {/* Hero text */}
         <div className="text-center max-w-4xl mx-auto px-4">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight">
-            Transform your
-            
-            podcasts
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
-               into knowledge network
-            </span>
-            
+          {/* Beta banner */}
+          <div className="inline-flex items-center px-4 py-2 bg-purple-500/20 border border-purple-500/30 rounded-full text-purple-300 text-sm font-medium mb-8">
+            <span>Enspire AI is now in beta</span>
+            <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+          
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 sm:mb-8 leading-tight">
+            The AI Knowledge Framework
           </h1>
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed">
-          Enspire AI brings your notes, takeaways, and communities into one place — and builds neural connections between episodes and brain so it empowers your inspiration.
+          <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed">
+            Transform your podcasts into a connected knowledge network. Enspire AI builds neural connections between episodes and concepts, giving you a private, explorable map of everything you've absorbed.
           </p>
           
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
-            <a href="#waitlist" className="w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold text-sm sm:text-base rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg">
-               Join Waitlist
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <a href="#waitlist" className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold text-base rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all transform hover:scale-105 shadow-lg flex items-center space-x-2">
+              <span>Get Started</span>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
             </a>
-            <a href="#demo" className="w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-4 border border-white text-white font-semibold text-sm sm:text-base rounded-lg hover:bg-white hover:text-gray-900 transition-all">
-              Watch Demo
+            <a href="#demo" className="px-8 py-4 bg-purple-500/20 border border-purple-500/30 text-white font-semibold text-base rounded-lg hover:bg-purple-500/30 transition-all flex items-center space-x-2">
+              <span>Read the docs</span>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
             </a>
           </div>
+        </div>
+      </div>
+
+      {/* Client Logos Section */}
+      <div className="container mx-auto px-6 relative z-10 mt-20 sm:mt-24">
+        <div className="flex flex-wrap justify-center items-center gap-8 sm:gap-12 opacity-60">
+          <div className="text-white/70 font-semibold text-lg">Spotify</div>
+          <div className="text-white/70 font-semibold text-lg">Apple</div>
+          <div className="text-white/70 font-semibold text-lg">Google</div>
+          <div className="text-white/70 font-semibold text-lg">Notion</div>
+          <div className="text-white/70 font-semibold text-lg">Evernote</div>
+          <div className="text-white/70 font-semibold text-lg">OneNote</div>
         </div>
       </div>
       
