@@ -4,52 +4,52 @@ const PodcastLogosSection: React.FC = () => {
   const sp500Companies = [
     { 
       name: 'Apple Inc.', 
-      logo: '../Company logos 2/Apple_Inc.-Logo.wine.png',
+      logo: '🍎',
       description: 'Technology' 
     },
     { 
       name: 'Microsoft', 
-      logo: '../Company logos 2/icons8-microsoft-48.png',
+      logo: '🪟',
       description: 'Technology' 
     },
     { 
       name: 'Alphabet', 
-      logo: '../Company logos 2/Alphabet-Inc.-Logo.png',
+      logo: '🔍',
       description: 'Technology' 
     },
     { 
       name: 'Amazon', 
-      logo: '../Company logos 2/[CITYPNG.COM]Amazon Official Logo - 3000x3000.png',
+      logo: '📦',
       description: 'E-commerce' 
     },
     { 
       name: 'NVIDIA', 
-      logo: '../Company logos 2/Nvidia-Logo.wine.png',
+      logo: '🎮',
       description: 'Technology' 
     },
     { 
       name: 'Tesla', 
-      logo: '../Company logos 2/Tesla,_Inc.-Logo.wine.png',
+      logo: '⚡',
       description: 'Automotive' 
     },
     { 
       name: 'Berkshire Hathaway', 
-      logo: '../Company logos 2/BRK-B_BIG.png',
+      logo: '📈',
       description: 'Conglomerate' 
     },
     { 
       name: 'UnitedHealth Group', 
-      logo: '../Company logos 2/UnitedHealth_Group-Logo.wine.png',
+      logo: '🏥',
       description: 'Healthcare' 
     },
     { 
       name: 'JPMorgan Chase', 
-      logo: '../Company logos 2/JPMorgan_Chase-Logo.wine.png',
+      logo: '🏦',
       description: 'Banking' 
     },
     { 
       name: 'Visa', 
-      logo: '../Company logos 2/Visa_Inc.-Logo.wine.png',
+      logo: '💳',
       description: 'Financial Services' 
     }
   ];
@@ -78,7 +78,9 @@ const PodcastLogosSection: React.FC = () => {
               className="group flex flex-col items-center p-6 rounded-lg transition-all duration-300 hover:bg-[#1a2332]/50 hover:scale-105"
             >
               <div className="text-blue-400 group-hover:text-blue-300 transition-colors duration-300 mb-3">
-                <img src={company.logo} alt={company.name} className="w-12 h-12 object-contain" />
+                <div className="w-12 h-12 flex items-center justify-center text-2xl">
+                  {company.logo}
+                </div>
               </div>
               <h3 className="text-white font-semibold text-center text-sm mb-1">
                 {company.name}
@@ -98,7 +100,9 @@ const PodcastLogosSection: React.FC = () => {
               className="group flex flex-col items-center p-6 rounded-lg transition-all duration-300 hover:bg-[#1a2332]/50 hover:scale-105"
             >
               <div className="text-blue-400 group-hover:text-blue-300 transition-colors duration-300 mb-3">
-                <img src={company.logo} alt={company.name} className="w-12 h-12 object-contain" />
+                <div className="w-12 h-12 flex items-center justify-center text-2xl">
+                  {company.logo}
+                </div>
               </div>
               <h3 className="text-white font-semibold text-center text-sm mb-1">
                 {company.name}
