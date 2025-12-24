@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer: React.FC = () => {
   const footerRef = useRef<HTMLDivElement>(null);
@@ -74,8 +75,8 @@ const Footer: React.FC = () => {
               © 2025 Enspire. All rights reserved.
             </p>
             <div className="flex items-center space-x-4 sm:space-x-6">
-              <a href="#" className="text-gray-400 hover:text-purple-300 transition-colors text-xs sm:text-sm">Privacy Policy</a>
-              <a href="#" className="text-gray-400 hover:text-purple-300 transition-colors text-xs sm:text-sm">Terms of Service</a>
+              <Link to="/privacy" className="text-gray-400 hover:text-purple-300 transition-colors text-xs sm:text-sm">Privacy Policy</Link>
+              <Link to="/terms" className="text-gray-400 hover:text-purple-300 transition-colors text-xs sm:text-sm">Terms of Service</Link>
             </div>
           </div>
         </div>

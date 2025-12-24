@@ -314,7 +314,12 @@ const HeroSection: React.FC = () => {
           
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <a href="#waitlist" className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold text-base rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all transform hover:scale-105 shadow-lg flex items-center space-x-2">
+            <a
+              href="https://enspiremobileapp.vercel.app"
+              target="_blank"
+              rel="noreferrer"
+              className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold text-base rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all transform hover:scale-105 shadow-lg flex items-center space-x-2"
+            >
               <span>Get Started</span>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
